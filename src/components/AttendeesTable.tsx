@@ -9,6 +9,11 @@ export default function AttendeesTable() {
     endDate: "",
     minScore: "",
   });
+  const [sortConfig, setSortConfig] = useState<{
+    key: string;
+    direction: "asc" | "desc";
+  } | null>(null);
+
   const filterSearch = attendees.filter((attendee) => {
     const matchesName = attendee.name
       .toLowerCase()
@@ -34,25 +39,93 @@ export default function AttendeesTable() {
       matchesEndDate
     );
   });
-  return (
-    <>
-      <div className="rounded-lg shadow p-6 bg-white">
-        <h2 className="font-bold text-2xl mb-4">Attendes</h2>
 
-        <table className="w-full border-collapse">
+  const handleSort = (key: string) => {
+    let direction: "asc" | "desc" = "asc";
+
+    if (
+      sortConfig &&
+      sortConfig.key === key &&
+      sortConfig.direction === "asc"
+    ) {
+      direction = "desc";
+    }
+
+    setSortConfig({ key, direction });
+  };
+
+  const sortedData = [...filterSearch];
+
+  if (sortConfig) {
+    sortedData.sort((a, b) => {
+      const aValue = a[sortConfig.key as keyof typeof a];
+      const bValue = b[sortConfig.key as keyof typeof b];
+
+      if (aValue < bValue) return sortConfig.direction === "asc" ? -1 : 1;
+
+      if (aValue > bValue) return sortConfig.direction === "asc" ? 1 : -1;
+
+      return 0;
+    });
+  }
+  return (
+    <div className="bg-white rounded-xl shadow-lg p-6">
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-bold text-gray-800">
+          Attendees Management
+        </h2>
+
+        <span className="text-sm text-gray-500">
+          {sortedData.length} Records
+        </span>
+      </div>
+
+      <div className="overflow-x-auto">
+        <table className="w-full border border-gray-200 rounded-lg overflow-hidden">
           <thead>
-            <tr className="bg-gray-100">
-              <th className="text-left p-3">Name</th>
-              <th className="text-left p-3">Email</th>
-              <th className="text-left p-3">Date</th>
-              <th className="text-left p-3">Score</th>
+            <tr className="bg-gray-100 text-gray-700">
+              <th
+                className="p-4 text-left cursor-pointer select-none"
+                onClick={() => handleSort("name")}
+              >
+                Name{" "}
+                {sortConfig?.key === "name" &&
+                  (sortConfig.direction === "asc" ? "↑" : "↓")}
+              </th>
+
+              <th
+                className="p-4 text-left cursor-pointer select-none"
+                onClick={() => handleSort("email")}
+              >
+                Email{" "}
+                {sortConfig?.key === "email" &&
+                  (sortConfig.direction === "asc" ? "↑" : "↓")}
+              </th>
+
+              <th
+                className="p-4 text-left cursor-pointer select-none"
+                onClick={() => handleSort("joinDate")}
+              >
+                Date{" "}
+                {sortConfig?.key === "joinDate" &&
+                  (sortConfig.direction === "asc" ? "↑" : "↓")}
+              </th>
+
+              <th
+                className="p-4 text-left cursor-pointer select-none"
+                onClick={() => handleSort("score")}
+              >
+                Score{" "}
+                {sortConfig?.key === "score" &&
+                  (sortConfig.direction === "asc" ? "↑" : "↓")}
+              </th>
             </tr>
+
             <tr className="bg-gray-50">
               <th className="p-2">
                 <input
                   type="search"
                   placeholder="Search Name"
-                  className="border rounded px-2 py-1 w-full"
                   value={filters.name}
                   onChange={(e) =>
                     setFilters({
@@ -60,6 +133,7 @@ export default function AttendeesTable() {
                       name: e.target.value,
                     })
                   }
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </th>
 
@@ -67,7 +141,6 @@ export default function AttendeesTable() {
                 <input
                   type="search"
                   placeholder="Search Email"
-                  className="border rounded px-2 py-1 w-full"
                   value={filters.email}
                   onChange={(e) =>
                     setFilters({
@@ -75,39 +148,42 @@ export default function AttendeesTable() {
                       email: e.target.value,
                     })
                   }
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </th>
 
               <th className="p-2">
-                <input
-                  type="date"
-                  value={filters.startDate}
-                  onChange={(e) =>
-                    setFilters({
-                      ...filters,
-                      startDate: e.target.value,
-                    })
-                  }
-                  className="border rounded px-2 py-1 w-full"
-                />
-                <input
-                  type="date"
-                  value={filters.endDate}
-                  onChange={(e) =>
-                    setFilters({
-                      ...filters,
-                      endDate: e.target.value,
-                    })
-                  }
-                  className="border rounded px-2 py-1 w-full"
-                />
+                <div className="flex gap-2">
+                  <input
+                    type="date"
+                    value={filters.startDate}
+                    onChange={(e) =>
+                      setFilters({
+                        ...filters,
+                        startDate: e.target.value,
+                      })
+                    }
+                    className="w-full rounded-lg border border-gray-300 px-2 py-2"
+                  />
+
+                  <input
+                    type="date"
+                    value={filters.endDate}
+                    onChange={(e) =>
+                      setFilters({
+                        ...filters,
+                        endDate: e.target.value,
+                      })
+                    }
+                    className="w-full rounded-lg border border-gray-300 px-2 py-2"
+                  />
+                </div>
               </th>
 
               <th className="p-2">
                 <input
                   type="number"
                   placeholder="Min Score"
-                  className="border rounded px-2 py-1 w-full"
                   value={filters.minScore}
                   onChange={(e) =>
                     setFilters({
@@ -115,22 +191,27 @@ export default function AttendeesTable() {
                       minScore: e.target.value,
                     })
                   }
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </th>
             </tr>
           </thead>
+
           <tbody>
-            {filterSearch.map((attendee) => (
-              <tr key={attendee.id} className="border-b">
-                <td className="p-3">{attendee.name}</td>
-                <td className="p-3">{attendee.email}</td>
-                <td className="p-3">{attendee.joinDate}</td>
-                <td className="p-3">{attendee.score}</td>
+            {sortedData.map((attendee) => (
+              <tr
+                key={attendee.id}
+                className="border-b hover:bg-blue-50 transition-colors"
+              >
+                <td className="p-4">{attendee.name}</td>
+                <td className="p-4">{attendee.email}</td>
+                <td className="p-4">{attendee.joinDate}</td>
+                <td className="p-4 font-medium">{attendee.score}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 }
