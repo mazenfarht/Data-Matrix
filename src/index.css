@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+:root {
+  --color-primary: #50bde9;
+  --color-background: #e9f7fc;
+  --color-secbg: #bbe6f6;
+  --color-text-grey: #a4a3a3;
+}
+
+body {
+  background-color: var(--color-background);
+  font-family: "Cairo", sans-serif;
+}
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 12s linear infinite;
+  will-change: transform;
+}
