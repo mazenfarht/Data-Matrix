@@ -2,8 +2,11 @@ import { useState } from "react";
 import { attendees } from "../data/mockData";
 import { useAttendeeFilter } from "../hooks/useAttendeeFilter";
 import { useAttendeeSort } from "../hooks/useAttendeeSort";
-import type { Filters, SortConfig } from "../types/attendee";
+import type { Filters, Attendee, SortConfig } from "../types/attendee";
+
 export default function AttendeesTable() {
+  const [data, setData] = useState<Attendee[]>(attendees);
+
   const [filters, setFilters] = useState<Filters>({
     name: "",
     email: "",
@@ -14,7 +17,7 @@ export default function AttendeesTable() {
 
   const [sortConfig, setSortConfig] = useState<SortConfig | null>(null);
 
-  const filteredData = useAttendeeFilter(attendees, filters);
+  const filteredData = useAttendeeFilter(data, filters);
 
   const handleSort = (key: string) => {
     let direction: "asc" | "desc" = "asc";
@@ -32,18 +35,6 @@ export default function AttendeesTable() {
 
   const sortedData = useAttendeeSort(filteredData, sortConfig);
 
-  if (sortConfig) {
-    sortedData.sort((a, b) => {
-      const aValue = a[sortConfig.key as keyof typeof a];
-      const bValue = b[sortConfig.key as keyof typeof b];
-
-      if (aValue < bValue) return sortConfig.direction === "asc" ? -1 : 1;
-
-      if (aValue > bValue) return sortConfig.direction === "asc" ? 1 : -1;
-
-      return 0;
-    });
-  }
   return (
     <div className="bg-white rounded-xl shadow-lg p-6">
       <div className="flex items-center justify-between mb-6">
