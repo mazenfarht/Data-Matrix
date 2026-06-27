@@ -138,16 +138,40 @@ npm run preview
 
 ## 🎯 Assignment Requirements Covered
 
-- ✅ DOM Virtualization
-- ✅ 10,000+ Rows Support
-- ✅ Multi-column Filtering
-- ✅ Client-side Sorting
-- ✅ Inline Editing
-- ✅ Debounced Auto Save
-- ✅ Batch Actions
-- ✅ TypeScript
-- ✅ Performance Optimizations
-- ✅ Reusable Components
+### Build the core attendee management ledger
+
+- ✅ Built a scalable attendee management table capable of handling thousands of records efficiently.
+- ✅ Implemented fast client-side sorting.
+- ✅ Added inline modification hooks for editing attendee information.
+
+### Implement DOM Virtualization
+
+- ✅ Implemented DOM Virtualization using **TanStack Virtual**.
+- ✅ Optimized rendering to efficiently support **10,000+ attendee records**.
+
+### Create an advanced multi-column filtering matrix
+
+- ✅ Added multi-column filtering by:
+  - Name
+  - Email
+  - Join Date Range
+  - Minimum Score
+- ✅ Enabled applying all filters simultaneously.
+
+### Build inline Excel-like editing with debounced auto-save
+
+- ✅ Implemented inline editing for attendee fields.
+- ✅ Added reusable editable cell components.
+- ✅ Implemented debounced auto-save (600ms) to simulate API requests and prevent unnecessary network calls.
+
+### Additional Improvements
+
+- ✅ Added batch row selection.
+- ✅ Implemented Select All functionality.
+- ✅ Added Delete Selected and Clear Selection actions.
+- ✅ Refactored the project into reusable components and custom hooks.
+- ✅ Optimized rendering using React.memo, useMemo, and useCallback.
+- ✅ Maintained strict TypeScript typing throughout the project.
 
 ## 👨‍💻 Author
 
