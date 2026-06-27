@@ -173,6 +173,9 @@ npm run preview
 - ✅ Optimized rendering using React.memo, useMemo, and useCallback.
 - ✅ Maintained strict TypeScript typing throughout the project.
 
+📸 Screenshots
+![Dashboard](./Screen-Task.png)
+
 ## 👨‍💻 Author
 
 **Mazen Mostafa**
