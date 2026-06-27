@@ -35,6 +35,23 @@ export default function AttendeesTable() {
 
   const sortedData = useAttendeeSort(filteredData, sortConfig);
 
+  const handleEdit = (
+    id: number,
+    field: keyof Attendee,
+    value: string | number
+  ) => {
+    setData((prev) =>
+      prev.map((attendee) =>
+        attendee.id === id
+          ? {
+              ...attendee,
+              [field]: value,
+            }
+          : attendee
+      )
+    );
+  };
+
   return (
     <div className="bg-white rounded-xl shadow-lg p-6">
       <div className="flex items-center justify-between mb-6">
@@ -170,10 +187,43 @@ export default function AttendeesTable() {
                 key={attendee.id}
                 className="border-b hover:bg-blue-50 transition-colors"
               >
-                <td className="p-4">{attendee.name}</td>
-                <td className="p-4">{attendee.email}</td>
-                <td className="p-4">{attendee.joinDate}</td>
-                <td className="p-4 font-medium">{attendee.score}</td>
+                <td className="p-4">
+                  <input
+                    value={attendee.name}
+                    onChange={(e) =>
+                      handleEdit(attendee.id, "name", e.target.value)
+                    }
+                    className="w-full border rounded px-2 py-1"
+                  />
+                </td>{" "}
+                <td className="p-4">
+                  <input
+                    value={attendee.email}
+                    onChange={(e) =>
+                      handleEdit(attendee.id, "email", e.target.value)
+                    }
+                    className="w-full border rounded px-2 py-1"
+                  />
+                </td>{" "}
+                <td className="p-4">
+                  <input
+                    type="date"
+                    value={attendee.joinDate}
+                    onChange={(e) =>
+                      handleEdit(attendee.id, "joinDate", e.target.value)
+                    }
+                  />
+                </td>{" "}
+                <td className="p-4">
+                  <input
+                    type="number"
+                    value={attendee.score}
+                    onChange={(e) =>
+                      handleEdit(attendee.id, "score", Number(e.target.value))
+                    }
+                    className="w-20 border rounded px-2 py-1"
+                  />
+                </td>{" "}
               </tr>
             ))}
           </tbody>
