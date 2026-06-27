@@ -1,5 +1,3 @@
-import React from "react";
-
 interface BatchActionsProps {
   selectedCount: number;
   onDeleteSelected: () => void;

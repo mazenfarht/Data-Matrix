@@ -1,4 +1,3 @@
-import React from "react";
 import type { Attendee, SortConfig } from "../types/attendee";
 
 interface TableHeaderProps {
