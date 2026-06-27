@@ -1,44 +1,20 @@
 import { useState } from "react";
 import { attendees } from "../data/mockData";
-
+import { useAttendeeFilter } from "../hooks/useAttendeeFilter";
+import { useAttendeeSort } from "../hooks/useAttendeeSort";
+import type { Filters, SortConfig } from "../types/attendee";
 export default function AttendeesTable() {
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<Filters>({
     name: "",
     email: "",
     startDate: "",
     endDate: "",
     minScore: "",
   });
-  const [sortConfig, setSortConfig] = useState<{
-    key: string;
-    direction: "asc" | "desc";
-  } | null>(null);
 
-  const filterSearch = attendees.filter((attendee) => {
-    const matchesName = attendee.name
-      .toLowerCase()
-      .includes(filters.name.toLowerCase());
-    const matchesEmail = attendee.email
-      .toLowerCase()
-      .includes(filters.email.toLowerCase());
-    const matchesScore =
-      !filters.minScore || attendee.score >= Number(filters.minScore);
+  const [sortConfig, setSortConfig] = useState<SortConfig | null>(null);
 
-    const attendeeDate = new Date(attendee.joinDate);
-
-    const matchesStartDate =
-      !filters.startDate || attendeeDate >= new Date(filters.startDate);
-
-    const matchesEndDate =
-      !filters.endDate || attendeeDate <= new Date(filters.endDate);
-    return (
-      matchesName &&
-      matchesEmail &&
-      matchesScore &&
-      matchesStartDate &&
-      matchesEndDate
-    );
-  });
+  const filteredData = useAttendeeFilter(attendees, filters);
 
   const handleSort = (key: string) => {
     let direction: "asc" | "desc" = "asc";
@@ -54,7 +30,7 @@ export default function AttendeesTable() {
     setSortConfig({ key, direction });
   };
 
-  const sortedData = [...filterSearch];
+  const sortedData = useAttendeeSort(filteredData, sortConfig);
 
   if (sortConfig) {
     sortedData.sort((a, b) => {
