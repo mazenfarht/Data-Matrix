@@ -174,7 +174,8 @@ npm run preview
 - ✅ Maintained strict TypeScript typing throughout the project.
 
 📸 Screenshots
-![Dashboard](./Screen-Task.png)
+Home Page:
+<img width="1893" height="901" alt="Screen-Tasx" src="https://github.com/user-attachments/assets/65d8470d-05af-4237-9d11-9bf0f95d3443" />
 
 ## 👨‍💻 Author
 
