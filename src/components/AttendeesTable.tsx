@@ -137,6 +137,7 @@ export default function AttendeesTable() {
             return (
               <AttendeeRow
                 key={attendee.id}
+                index={virtualRow.index}
                 attendee={attendee}
                 isSelected={isSelected(attendee.id)}
                 onToggleSelect={toggleRow}

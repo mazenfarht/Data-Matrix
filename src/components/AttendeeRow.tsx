@@ -4,6 +4,7 @@ import EditableCell from "./EditableCell";
 
 interface AttendeeRowProps {
   attendee: Attendee;
+  index: number;
   isSelected: boolean;
   onToggleSelect: (id: number) => void;
   onEdit: (id: number, field: keyof Attendee, value: string | number) => void;
@@ -15,6 +16,7 @@ interface AttendeeRowProps {
 // With 10k rows this makes a noticeable difference.
 const AttendeeRow = React.memo(function AttendeeRow({
   attendee,
+  index,
   isSelected,
   onToggleSelect,
   onEdit,
@@ -24,6 +26,7 @@ const AttendeeRow = React.memo(function AttendeeRow({
   return (
     <div
       ref={measureRef}
+      data-index={index}
       className={`grid grid-cols-[40px_1fr_1fr_1fr_1fr] border-b ${
         isSelected ? "bg-blue-50" : "bg-white"
       }`}

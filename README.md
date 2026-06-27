@@ -1,73 +1,154 @@
-# React + TypeScript + Vite
+# High-Performance Data Matrix with Batch Actions
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A high-performance attendee management system built with **React**, **TypeScript**, and **TanStack Virtual**. The application is designed to efficiently handle thousands of records while providing a smooth user experience with advanced filtering, client-side sorting, inline editing, batch actions, and debounced auto-save.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### ⚡ High Performance
 
-## React Compiler
+- DOM virtualization using **TanStack Virtual**
+- Optimized to handle **10,000+ rows**
+- Efficient rendering with `React.memo`
+- Optimized state updates using `useCallback` and `useMemo`
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 🔍 Advanced Filtering
 
-## Expanding the ESLint configuration
+Filter attendees using multiple criteria simultaneously:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Name
+- Email
+- Join date range
+- Minimum score
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 📊 Client-Side Sorting
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Sort attendees by:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Name
+- Email
+- Join Date
+- Score
+
+Supports both ascending and descending order.
+
+### ✏️ Inline Editing
+
+Edit attendee information directly inside the table:
+
+- Name
+- Email
+- Join Date
+- Score
+
+Changes are reflected instantly in the UI.
+
+### 💾 Debounced Auto Save
+
+- Automatically saves edited data after **600ms**
+- Prevents continuous save requests while typing
+- Simulated API delay to mimic a real backend
+
+### ✅ Batch Actions
+
+- Select individual rows
+- Select all visible rows
+- Delete selected attendees
+- Clear current selection
+
+## 🛠️ Tech Stack
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- TanStack Virtual
+
+## 📂 Project Structure
+
+```text
+src
+├── components
+│   ├── AttendeesTable.tsx
+│   ├── AttendeeRow.tsx
+│   ├── EditableCell.tsx
+│   ├── FilterRow.tsx
+│   ├── TableHeader.tsx
+│   └── BatchActions.tsx
+│
+├── hooks
+│   ├── useAttendeeFilter.ts
+│   ├── useAttendeeSort.ts
+│   ├── useDebouncedSave.ts
+│   └── useRowSelection.ts
+│
+├── utils
+│   └── debounce.ts
+│
+├── data
+│   └── mockData.ts
+│
+├── types
+│   └── attendee.ts
+│
+├── App.tsx
+└── main.tsx
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## ⚙️ Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Clone the repository
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone <repository-url>
+cd <project-folder>
 ```
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Start the development server
+
+```bash
+npm run dev
+```
+
+### Build for production
+
+```bash
+npm run build
+```
+
+### Preview the production build
+
+```bash
+npm run preview
+```
+
+## 📈 Performance Optimizations
+
+- DOM Virtualization to render only visible rows
+- Stable debounced callbacks using `useRef`
+- Memoized row components with `React.memo`
+- Memoized derived data with `useMemo`
+- Stable event handlers using `useCallback`
+- `Set`-based row selection for O(1) lookup performance
+
+## 🎯 Assignment Requirements Covered
+
+- ✅ DOM Virtualization
+- ✅ 10,000+ Rows Support
+- ✅ Multi-column Filtering
+- ✅ Client-side Sorting
+- ✅ Inline Editing
+- ✅ Debounced Auto Save
+- ✅ Batch Actions
+- ✅ TypeScript
+- ✅ Performance Optimizations
+- ✅ Reusable Components
+
+## 👨‍💻 Author
+
+**Mazen Mostafa**
