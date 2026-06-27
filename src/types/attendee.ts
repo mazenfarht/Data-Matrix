@@ -18,3 +18,4 @@ export interface SortConfig {
   key: keyof Attendee;
   direction: "asc" | "desc";
 }
+export type EditableCellType = "text" | "email" | "number" | "date";
